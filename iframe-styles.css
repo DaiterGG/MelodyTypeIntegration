@@ -1,0 +1,61 @@
+html {
+    overflow: hidden !important;
+}
+
+body {
+    background-color: var(--bg-color);
+}
+
+input {
+    background-color: var(--sub-alt-color) !important;
+    color: var(--text-color) !important;
+}
+
+.letter.incorrect {
+    color: var(--incorrect-letter-color) !important;
+
+}
+
+.letter.correct {
+    color: var(--text-color) !important;
+}
+
+.letter.normal {
+    color: var(--sub-color) !important;
+}
+
+.letter.extra {
+    color: var(--extra-letter-color) !important;
+}
+
+.visible {
+    color: var(--caret-color) !important;
+}
+
+.settings-modal {
+    background-color: #00000000 !important;
+}
+
+.settings-window {
+    background-color: var(--bg-color) !important;
+    border: 4px solid var(--sub-alt-color) !important;
+    border-radius: var(--roundness) !important;
+    color: var(--text-color) !important;
+}
+
+.close-window-btn {
+    background-color: var(--sub-alt-color) !important;
+    color: var(--text-color) !important;
+}
+
+.settings-topbar {
+    color: var(--sub-color) !important;
+}
+
+.letter.spacer {
+    color: var(--sub-color) !important;
+}
+
+.settings-content {
+    padding-bottom: 90px !important;
+}
