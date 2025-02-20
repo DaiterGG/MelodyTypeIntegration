@@ -83,7 +83,7 @@ input::placeholder {
 }
 
 #skip-btn {
-    top: 70px;
+    top: 60px !important;
 }
 
 body {
@@ -93,4 +93,8 @@ body {
 
 #wrapper {
     padding-top: -40px !important;
+}
+
+.aligned-icons {
+    color: var(--sub-color) !important;
 }

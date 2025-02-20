@@ -9,7 +9,7 @@ class FrameManager {
     this.setupLoadListener();
     setInterval(() => {
       this.syncRootVariables();
-    }, 3000);
+    }, 7000);
   }
 
   createIframe() {
@@ -43,29 +43,23 @@ class FrameManager {
     const root = document.documentElement;
     const styles = getComputedStyle(root);
 
-  const customProperties = {};
+    const customProperties = {};
 
-  // Loop through all stylesheets in the document.
-  for (const sheet of document.styleSheets) {
-    try {
-      // Loop through each CSS rule in the stylesheet.
-      for (const rule of sheet.cssRules) {
-        // Check if the rule applies to the root element.
-        if (rule.selectorText && (rule.selectorText.includes(':root') || rule.selectorText.includes('#words'))) {
-          // Loop through each property in the rule's style.
-          for (const property of rule.style) {
-            if (property.startsWith('--')) {
-              customProperties[property] = rule.style.getPropertyValue(property).trim();
+    for (const sheet of document.styleSheets) {
+      try {
+        for (const rule of sheet.cssRules) {
+          if (rule.selectorText && (rule.selectorText.includes(':root') || rule.selectorText.includes('#words'))) {
+            for (const property of rule.style) {
+              if (property.startsWith('--')) {
+                customProperties[property] = rule.style.getPropertyValue(property).trim();
+              }
             }
           }
         }
+      } catch (e) {
+        console.warn(`Cannot access stylesheet: ${sheet.href}`, e);
       }
-    } catch (e) {
-      // Accessing cross-origin stylesheets can throw a SecurityError.
-      console.warn(`Cannot access stylesheet: ${sheet.href}`, e);
     }
-  }
-
 
     this.postToFrame({
       type: 'CSS_VARS_UPDATE',
@@ -73,7 +67,6 @@ class FrameManager {
       variables: customProperties
     });
   }
-
   postToFrame(message) {
     if (this.iframe?.contentWindow) {
       this.iframe.contentWindow.postMessage(message, '*');
@@ -89,25 +82,26 @@ if (document.readyState === 'loading') {
 
 function init() {
   const frameManager = new FrameManager();
-  // Select the row container
-  const row = document.querySelector('.row');
-  const originalButton = document.querySelector('.textButton');
 
+  const row = document.querySelector('.row');
   const customText = row.querySelector('.mode');
+  const originalButton = customText.querySelector('.textButton');
+
 
   const clonedButton = originalButton.cloneNode(true);
   clonedButton.className = 'textButton MyButton';
   clonedButton.id = 'new-button';
 
 
-  const iconDiv = clonedButton.querySelector('div');
-  const icon = iconDiv.querySelector('i');
+  const icon = clonedButton.querySelector('i');
   icon.className = 'fas fa-star';
+
   const textNode = document.createTextNode(' melody ');
+  clonedButton.textContent = '';
+  clonedButton.appendChild(icon);
   clonedButton.appendChild(textNode);
   customText.appendChild(clonedButton);
 
-  // Function to run when the new button is clicked
   function handleNewButtonClick(e, frameManager) {
       frameManager.HideIframe(false);
       const mode = row.querySelector('.mode');
