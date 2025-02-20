@@ -36,7 +36,6 @@
     gap: .5em;
     align-items: baseline;
     justify-content: center;
-    margin-left: var(--horizontalPadding);
     padding: var(--verticalPadding) 0px;
     padding-right: 10px;
     align-self: end;

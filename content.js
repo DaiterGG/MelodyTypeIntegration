@@ -23,7 +23,6 @@ class FrameManager {
 
   HideIframe(hide) {
     if ( hide ){
-        console.log('hide');
       this.iframe.style.display = 'none';
     } else {
       this.iframe.style.display = 'block';
@@ -112,7 +111,6 @@ function init() {
   function handleNewButtonClick(e, frameManager) {
       frameManager.HideIframe(false);
       const mode = row.querySelector('.mode');
-      console.log(mode);
       const btns = mode.querySelectorAll('.textButton');
       btns.forEach(btn => {
 
@@ -133,12 +131,18 @@ function init() {
       right.classList.add('scrolled');
 
       clonedButton.className = 'textButton MyButton active';
+
+
+      frameManager.postToFrame({
+        type: 'STYLE_LOAD',
+      });
   }
 
   clonedButton.addEventListener('click', (e) => handleNewButtonClick(e, frameManager));
 
-    function handleOtherButtonClick(e) {
+    function handleOtherButtonClick(e, frameManager) {
         frameManager.HideIframe(true);
+      clonedButton.className = 'textButton MyButton';
     }
 
   const buttons = Array.from(row.querySelectorAll('button'));

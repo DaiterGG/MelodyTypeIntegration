@@ -6,6 +6,53 @@ class IframeStyleReceiver {
 
   initMessageHandler() {
     window.addEventListener('message', (event) => {
+      if (event.data.type === 'STYLE_LOAD') {
+
+        const imgs = document.querySelectorAll('img');
+
+        const existingCanvases = document.querySelectorAll('.tinted-canvas');
+          console.log(existingCanvases);
+          for (let i = 0; i < existingCanvases.length; i++) {
+            existingCanvases[i].remove();
+          }
+
+          imgs.forEach(img => {
+            function applyTint() {
+
+              img.style.display = 'block';
+
+              const canvas = document.createElement('canvas');
+                canvas.className = 'tinted-canvas';
+              
+              canvas.width = img.clientWidth;
+              canvas.height = img.clientHeight;
+              
+              const ctx = canvas.getContext('2d');
+
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+              ctx.globalCompositeOperation = 'source-atop';
+
+              var style = window.getComputedStyle(document.body);
+              ctx.fillStyle = style.getPropertyValue('--sub-color');
+
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+              // Reset composite operation if further drawing is needed
+              ctx.globalCompositeOperation = 'source-over';
+
+              // Insert the canvas into the DOM (and optionally hide the original image)
+              img.parentNode.insertBefore(canvas, img);
+              img.style.display = 'none';
+            }
+          // Ensure the image is fully loaded before processing
+          if (img.complete) {
+            applyTint();
+          } else {
+            img.onload = applyTint;
+          }
+        })
+      }
       if (event.data.type === 'STYLE_UPDATE') {
         this.applyStyles(
           event.data.selector,
@@ -70,110 +117,6 @@ new MutationObserver(mutations => {
   childList: true,
   subtree: true
 });
-
-//edited
-class EmbedStyleOverrider {
-  constructor(config) {
-    this.styleConfig = new Map(config);
-    this.observer = null;
-    this.init();
-  }
-
-  init() {
-    // Initial application
-    this.applyAllStyles();
-    
-    // Set up mutation observer
-    this.setupObserver();
-    
-    // Periodic check as fallback
-    this.setupHeartbeat();
-  }
-
-  setupObserver() {
-    this.observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'childList') {
-          this.handleDOMChanges(mutation.addedNodes);
-        }
-      });
-    });
-
-    this.observer.observe(document.documentElement, {
-      childList: true,
-      subtree: true
-    });
-  }
-
-  handleDOMChanges(nodes) {
-    nodes.forEach(node => {
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        this.applyAllStyles(node);
-      }
-    });
-  }
-
-  applyAllStyles(root = document) {
-    this.styleConfig.forEach((styles, selector) => {
-      this.applyStylesToElements(root, selector, styles);
-    });
-  }
-
-  applyStylesToElements(root, selector, styles) {
-    const elements = root.querySelectorAll(selector);
-    elements.forEach(element => {
-      // Merge with existing styles instead of overwriting
-      Object.assign(element.style, styles);
-    });
-  }
-
-  addStyleOverride(selector, styles) {
-    this.styleConfig.set(selector, styles);
-    this.applyStylesToElements(document, selector, styles);
-  }
-
-  removeStyleOverride(selector) {
-    this.styleConfig.delete(selector);
-  }
-
-  setupHeartbeat() {
-    setInterval(() => {
-      this.applyAllStyles();
-    }, 3000);
-  }
-}
-
-// Configuration: [selector, styles] pairs
-const styleOverrides = [
-  ['.linkBox > form', {
-    'margin-top': '30px'
-  }],
-  ['#app > header', {
-    'height': '50px'
-  }],
-  ['#typing-area', {
-    'padding-top': '0px'
-  }],
-  ['#skip-btn', {
-    'top': '70px'
-  }],
-  ['.settings-gear-btn', {
-    'top': '82%'
-  }],
-  ['body', {
-    'overflow':'hidden !important',
-    'height': '100% !important'
-  }],
-  ['#wrapper', {
-    'padding-top': '-40px'
-  }],
-];
-
-// Initialize with configuration
-const styleOverrider = new EmbedStyleOverrider(styleOverrides);
-
-// Optional: Add new overrides dynamically
-// styleOverrider.addStyleOverride('.new-element', { color: 'blue' });
 
 (function() {
   // Get the URL of the CSS file
