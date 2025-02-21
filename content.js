@@ -106,6 +106,29 @@ function init() {
 
   let melodyActive = false;
   let lastMode;
+
+  // edge case handler for leaderboards
+  const leaderboard = document.querySelector(".view-leaderboards");
+  let pause = false;
+  leaderboard.addEventListener(
+    "click",
+    (_e) => {
+      if (pause || !melodyActive) return;
+      mode.querySelector(".textButton").click();
+      pause = true;
+      setTimeout(() => {
+        leaderboard.click();
+        setTimeout(() => {
+          pause = false;
+        }, 50);
+      }, 50);
+    },
+  );
+  clonedButton.addEventListener(
+    "click",
+    (e) => handleNewButtonClick(e),
+  );
+
   function handleNewButtonClick(_e) {
     if (lastMode == null) {
       lastMode = document.querySelector(".textButton.active").getAttribute(
@@ -122,23 +145,6 @@ function init() {
         btn.className = "textButton";
       }
     });
-
-    const leaderboard = document.querySelector(".view-leaderboards");
-    let pause = false;
-    leaderboard.addEventListener(
-      "click",
-      (_e) => {
-        if (pause) return;
-        mode.querySelector(".textButton").click();
-        pause = true;
-        setTimeout(() => {
-          leaderboard.click();
-          setTimeout(() => {
-            pause = false;
-          }, 50);
-        }, 50);
-      },
-    );
 
     const tohide = [
       ".puncAndNum",
@@ -163,11 +169,6 @@ function init() {
       type: "ICONS_UPDATE",
     });
   }
-
-  clonedButton.addEventListener(
-    "click",
-    (e) => handleNewButtonClick(e),
-  );
 
   function handleOtherButtonClick(e) {
     //prevent site from idling when switching back to the same mode

@@ -7,10 +7,13 @@ function initMessageHandler() {
       existingCanvases.forEach((canvas) => canvas.remove());
 
       imgs.forEach((img) => {
-        if (img.complete) {
+        if (
+          img != null && img.complete && img.style.display != ""
+        ) {
           applyTint(img);
         } else {
-          img.onload = () => applyTint(img);
+          //edge case for when page is still loading
+          setTimeout(() => applyTint(img), 30);
         }
       });
     }
