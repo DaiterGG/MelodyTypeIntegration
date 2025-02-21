@@ -13,28 +13,28 @@ class FrameManager {
   }
 
   createIframe() {
-    this.iframe = document.createElement('iframe');
-    this.iframe.src = 'https://melodytype.com';
-    this.iframe.allow = 'autoplay; encrypted-media';
-    this.iframe.id = 'melodytype-embed';
+    this.iframe = document.createElement("iframe");
+    this.iframe.src = "https://melodytype.com";
+    this.iframe.allow = "autoplay; encrypted-media";
+    this.iframe.id = "melodytype-embed";
     document.body.appendChild(this.iframe);
     this.HideIframe(true);
   }
 
   HideIframe(hide) {
-    if ( hide ){
-      this.iframe.style.display = 'none';
+    if (hide) {
+      this.iframe.style.display = "none";
     } else {
-      this.iframe.style.display = 'block';
+      this.iframe.style.display = "block";
     }
   }
   setupLoadListener() {
     if (!this.iframe) {
-      console.error('Iframe not initialized!');
+      console.error("Iframe not initialized!");
       return;
     }
 
-    this.iframe.addEventListener('load', () => {
+    this.iframe.addEventListener("load", () => {
       this.syncRootVariables();
     });
   }
@@ -48,10 +48,16 @@ class FrameManager {
     for (const sheet of document.styleSheets) {
       try {
         for (const rule of sheet.cssRules) {
-          if (rule.selectorText && (rule.selectorText.includes(':root') || rule.selectorText.includes('#words'))) {
+          if (
+            rule.selectorText &&
+            (rule.selectorText.includes(":root") ||
+              rule.selectorText.includes("#words"))
+          ) {
             for (const property of rule.style) {
-              if (property.startsWith('--')) {
-                customProperties[property] = rule.style.getPropertyValue(property).trim();
+              if (property.startsWith("--")) {
+                customProperties[property] = rule.style.getPropertyValue(
+                  property,
+                ).trim();
               }
             }
           }
@@ -62,20 +68,20 @@ class FrameManager {
     }
 
     this.postToFrame({
-      type: 'CSS_VARS_UPDATE',
-      selector: ':root',
-      variables: customProperties
+      type: "CSS_VARS_UPDATE",
+      selector: ":root",
+      variables: customProperties,
     });
   }
   postToFrame(message) {
     if (this.iframe?.contentWindow) {
-      this.iframe.contentWindow.postMessage(message, '*');
+      this.iframe.contentWindow.postMessage(message, "*");
     }
   }
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
 } else {
   init();
 }
@@ -83,70 +89,99 @@ if (document.readyState === 'loading') {
 function init() {
   const frameManager = new FrameManager();
 
-  const row = document.querySelector('.row');
-  const customText = row.querySelector('.mode');
-  const originalButton = customText.querySelector('.textButton');
-
+  const row = document.querySelector(".row");
+  const mode = row.querySelector(".mode");
+  const originalButton = mode.querySelector(".textButton");
 
   const clonedButton = originalButton.cloneNode(true);
-  clonedButton.className = 'textButton MyButton';
-  clonedButton.id = 'new-button';
+  clonedButton.className = "textButton MyButton";
+  clonedButton.id = "new-button";
+  clonedButton.setAttribute("mode", "melody");
 
+  const icon = clonedButton.querySelector("i");
+  icon.className = "fas fa-star";
 
-  const icon = clonedButton.querySelector('i');
-  icon.className = 'fas fa-star';
-
-  const textNode = document.createTextNode(' melody ');
-  clonedButton.textContent = '';
+  const textNode = document.createTextNode(" melody ");
+  clonedButton.textContent = "";
   clonedButton.appendChild(icon);
   clonedButton.appendChild(textNode);
-  customText.appendChild(clonedButton);
+  mode.appendChild(clonedButton);
 
-  function handleNewButtonClick(e, frameManager) {
-      frameManager.HideIframe(false);
-      const mode = row.querySelector('.mode');
-      const btns = mode.querySelectorAll('.textButton');
-      btns.forEach(btn => {
-
-          if (btn !== clonedButton){ 
-             btn.className = 'textButton';
-          }
-      });
-
-      const tohide = ['.puncAndNum','.customText','.quoteLength','.time','.wordCount'];
-      tohide.forEach(className => {
-          const element = row.querySelector(className);
-              element.classList.add('hidden');
-      });
-
-      const left = row.querySelector('.leftSpacer');
-      left.classList.add('scrolled');
-      const right = row.querySelector('.rightSpacer');
-      right.classList.add('scrolled');
-
-      clonedButton.className = 'textButton MyButton active';
-
-
-      frameManager.postToFrame({
-        type: 'STYLE_LOAD',
-      });
-  }
-
-  clonedButton.addEventListener('click', (e) => handleNewButtonClick(e, frameManager));
-
-    function handleOtherButtonClick(e, frameManager) {
-        frameManager.HideIframe(true);
-      clonedButton.className = 'textButton MyButton';
+  let melodyActive = false;
+  let lastMode;
+  function handleNewButtonClick(_e) {
+    if (lastMode == null) {
+      lastMode = document.querySelector(".textButton.active").getAttribute(
+        "mode",
+      );
+      console.log(lastMode);
     }
 
-  const buttons = Array.from(row.querySelectorAll('button'));
-  buttons.push( document.querySelector('.textButton.view-settings'));
-  buttons.push( document.querySelector('.textButton.view-about'));
-  buttons.push( document.querySelector('.textButton.view-login'));
+    melodyActive = true;
+    frameManager.HideIframe(false);
+    const btns = mode.querySelectorAll(".textButton");
+    btns.forEach((btn) => {
+      if (btn !== clonedButton) {
+        btn.className = "textButton";
+      }
+    });
 
-  buttons.forEach(button => {
+    const tohide = [
+      ".puncAndNum",
+      ".customText",
+      ".quoteLength",
+      ".time",
+      ".wordCount",
+    ];
+    tohide.forEach((className) => {
+      const element = row.querySelector(className);
+      element.classList.add("hidden");
+    });
+
+    const left = row.querySelector(".leftSpacer");
+    left.classList.add("scrolled");
+    const right = row.querySelector(".rightSpacer");
+    right.classList.add("scrolled");
+
+    clonedButton.className = "textButton MyButton active";
+
+    frameManager.postToFrame({
+      type: "ICONS_UPDATE",
+    });
+  }
+
+  clonedButton.addEventListener(
+    "click",
+    (e) => handleNewButtonClick(e),
+  );
+
+  function handleOtherButtonClick(e) {
+    //prevent site from idling when switching back to the same mode
+    if (lastMode == e.target.getAttribute("mode") && melodyActive) {
+      const otherButton = mode.querySelector(`.textButton`);
+      otherButton.click();
+      setTimeout(() => {
+        e.target.click();
+      }, 5);
+    }
+
+    lastMode = e.target.getAttribute("mode");
+    frameManager.HideIframe(true);
+    clonedButton.className = "textButton MyButton";
+    melodyActive = false;
+  }
+
+  const buttons = Array.from(row.querySelectorAll("button"));
+  buttons.push(document.querySelector(".textButton.view-settings"));
+  buttons.push(document.querySelector(".textButton.view-about"));
+  buttons.push(document.querySelector(".textButton.view-login"));
+
+  buttons.forEach((button) => {
     if (button !== clonedButton) {
-      button.addEventListener('click', (e) => handleOtherButtonClick(e, frameManager));
+      button.addEventListener(
+        "click",
+        (e) => handleOtherButtonClick(e),
+      );
     }
   });
 }
