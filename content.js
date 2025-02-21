@@ -40,9 +40,6 @@ class FrameManager {
   }
 
   syncRootVariables() {
-    const root = document.documentElement;
-    const styles = getComputedStyle(root);
-
     const customProperties = {};
 
     for (const sheet of document.styleSheets) {
@@ -126,6 +123,23 @@ function init() {
       }
     });
 
+    const leaderboard = document.querySelector(".view-leaderboards");
+    let pause = false;
+    leaderboard.addEventListener(
+      "click",
+      (_e) => {
+        if (pause) return;
+        mode.querySelector(".textButton").click();
+        pause = true;
+        setTimeout(() => {
+          leaderboard.click();
+          setTimeout(() => {
+            pause = false;
+          }, 50);
+        }, 50);
+      },
+    );
+
     const tohide = [
       ".puncAndNum",
       ".customText",
@@ -158,7 +172,10 @@ function init() {
   function handleOtherButtonClick(e) {
     //prevent site from idling when switching back to the same mode
     if (lastMode == e.target.getAttribute("mode") && melodyActive) {
-      const otherButton = mode.querySelector(`.textButton`);
+      const otherButtons = mode.querySelectorAll(`.textButton`);
+      const otherButton = otherButtons[0].getAttribute("mode") == lastMode
+        ? otherButtons[1]
+        : otherButtons[0];
       otherButton.click();
       setTimeout(() => {
         e.target.click();

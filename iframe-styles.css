@@ -1,100 +1,101 @@
 html {
-    overflow: hidden !important;
+  overflow: hidden !important;
 }
 
 body {
-    background-color: var(--bg-color);
+  background-color: var(--bg-color);
 }
 
 input {
-    background-color: var(--sub-alt-color) !important;
-    color: var(--text-color) !important;
-    border-radius: var(--roundness) !important;
+  background-color: var(--sub-alt-color) !important;
+  color: var(--text-color) !important;
+  border-radius: var(--roundness) !important;
 }
 
 input::placeholder {
-    color: var(--sub-color) !important;
+  color: var(--sub-color) !important;
 }
 
 .letter.incorrect {
-    color: var(--incorrect-letter-color) !important;
+  color: var(--incorrect-letter-color) !important;
 
 }
 
 .letter.correct {
-    color: var(--text-color) !important;
+  color: var(--text-color) !important;
 }
 
 .letter.normal {
-    color: var(--sub-color) !important;
+  color: var(--sub-color) !important;
 }
 
 .letter.extra {
-    color: var(--extra-letter-color) !important;
+  color: var(--extra-letter-color) !important;
 }
 
 .visible {
-    color: var(--caret-color) !important;
+  color: var(--caret-color) !important;
 }
 
 .settings-modal {
-    background-color: #00000000 !important;
+  background-color: #00000000 !important;
 }
 
 .settings-window {
-    background-color: var(--bg-color) !important;
-    border: 4px solid var(--sub-alt-color) !important;
-    border-radius: var(--roundness) !important;
-    color: var(--text-color) !important;
+  background-color: var(--bg-color) !important;
+  border: 4px solid var(--sub-alt-color) !important;
+  border-radius: var(--roundness) !important;
+  color: var(--text-color) !important;
 }
 
 .close-window-btn {
-    background-color: var(--sub-alt-color) !important;
-    color: var(--text-color) !important;
+  background-color: var(--sub-alt-color) !important;
+  color: var(--text-color) !important;
 }
 
 .settings-topbar {
-    color: var(--sub-color) !important;
+  color: var(--sub-color) !important;
 }
 
 .letter.spacer {
-    color: var(--sub-color) !important;
+  color: var(--sub-color) !important;
 }
 
 .settings-content {
-    padding-bottom: 90px !important;
+  padding-bottom: 90px !important;
 }
 
 .settings-gear-btn {
-    top: 82% !important;
+  top: 82% !important;
 }
 
 .linkBox>form {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 
 #app>header {
-    height: 50px;
+  height: 50px;
 }
 
 #typing-area {
-    padding-top: 0px;
+  padding-top: 0px;
 }
 
 #skip-btn {
-    top: 60px !important;
+  top: 60px !important;
+  color: var(--sub-color) !important;
 }
 
 body {
-    overflow: hidden !important;
-    height: 100% !important;
+  overflow: hidden !important;
+  height: 100% !important;
 }
 
 #wrapper {
-    padding-top: -40px !important;
+  padding-top: -40px !important;
 }
 
 .aligned-icons {
-    color: var(--sub-color) !important;
+  color: var(--sub-color) !important;
 }

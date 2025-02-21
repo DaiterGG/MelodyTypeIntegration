@@ -1,49 +1,31 @@
-class IframeStyleReceiver {
-  constructor() {
-    this.styleCache = new Map();
-    this.initMessageHandler();
-  }
+function initMessageHandler() {
+  globalThis.addEventListener("message", (event) => {
+    if (event.data.type === "ICONS_UPDATE") {
+      const imgs = document.querySelectorAll("img");
 
-  initMessageHandler() {
-    globalThis.addEventListener("message", (event) => {
-      if (event.data.type === "ICONS_UPDATE") {
-        const imgs = document.querySelectorAll("img");
+      const existingCanvases = document.querySelectorAll(".tinted-canvas");
+      existingCanvases.forEach((canvas) => canvas.remove());
 
-        const existingCanvases = document.querySelectorAll(".tinted-canvas");
-        existingCanvases.forEach((canvas) => canvas.remove());
+      imgs.forEach((img) => {
+        if (img.complete) {
+          applyTint(img);
+        } else {
+          img.onload = () => applyTint(img);
+        }
+      });
+    }
+    if (event.data.type === "CSS_VARS_UPDATE") {
+      applyCSSVariables(event.data.selector, event.data.variables);
+    }
+  });
+}
 
-        imgs.forEach((img) => {
-          if (img.complete) {
-            applyTint(img);
-          } else {
-            img.onload = () => applyTint(img);
-          }
-        });
-      }
-      if (event.data.type === "STYLE_UPDATE") {
-        this.applyStyles(event.data.selector, event.data.styles);
-      }
-      if (event.data.type === "CSS_VARS_UPDATE") {
-        this.applyCSSVariables(event.data.selector, event.data.variables);
-      }
-    });
-  }
-
-  applyCSSVariables(selector, variables) {
-    const root = document.querySelector(selector);
-    if (!root) return;
-    Object.entries(variables).forEach(([name, value]) => {
-      root.style.setProperty(name, value);
-    });
-  }
-
-  applyStyles(selector, styles) {
-    const elements = document.querySelectorAll(selector);
-    elements.forEach((element) => {
-      Object.assign(element.style, styles);
-      this.styleCache.set(selector, styles);
-    });
-  }
+function applyCSSVariables(selector, variables) {
+  const root = document.querySelector(selector);
+  if (!root) return;
+  Object.entries(variables).forEach(([name, value]) => {
+    root.style.setProperty(name, value);
+  });
 }
 
 function applyTint(img) {
@@ -71,26 +53,26 @@ function applyTint(img) {
   img.style.display = "none";
 }
 
-const styleReceiver = new IframeStyleReceiver();
-
-new MutationObserver((mutations) => {
-  mutations.forEach((mutation) => {
-    mutation.addedNodes.forEach((node) => {
-      if (node.nodeType === 1) {
-        styleReceiver.styleCache.forEach((styles, selector) => {
-          if (node.matches(selector)) {
-            Object.assign(node.style, styles);
+new MutationObserver((mutationsList) => {
+  mutationsList.forEach((mutation) => {
+    if (mutation.type === "childList" && mutation.addedNodes.length) {
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          if (
+            node.className.includes("overlay") ||
+            node.querySelector("#wrapper") != null ||
+            node.querySelector(".linkBox") != null
+          ) {
+            globalThis.postMessage({ type: "ICONS_UPDATE" }, "*");
           }
-        });
-      }
-    });
+        }
+      });
+    }
   });
-}).observe(document.body, {
-  childList: true,
-  subtree: true,
-});
+}).observe(document.body, { childList: true, subtree: true });
 
 (function () {
+  initMessageHandler();
   const cssFileUrl = chrome.runtime.getURL("iframe-styles.css");
 
   const link = document.createElement("link");
