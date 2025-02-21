@@ -13,7 +13,7 @@ function initMessageHandler() {
           applyTint(img);
         } else {
           //edge case for when page is still loading
-          setTimeout(() => applyTint(img), 30);
+          setTimeout(() => applyTint(img), 200);
         }
       });
     }

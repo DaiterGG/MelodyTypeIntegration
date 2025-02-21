@@ -50,7 +50,7 @@ input::placeholder {
 
 .close-window-btn {
   background-color: var(--sub-alt-color) !important;
-  color: var(--text-color) !important;
+  color: var(--bg-color) !important;
 }
 
 .settings-topbar {
@@ -98,4 +98,33 @@ body {
 
 .aligned-icons {
   color: var(--sub-color) !important;
+}
+
+.text {
+  color: var(--text-color) !important;
+}
+
+.informational {
+  color: var(--text-color) !important;
+}
+
+body {
+  color: var(--text-color) !important;
+}
+
+.toggle-mode>button {
+  color: var(--text-color) !important;
+}
+
+.start-button {
+  border-left-color: var(--main-color) !important;
+}
+
+.informational>a {
+  color: var(--sub-color) !important;
+}
+
+#submit-btn {
+  background-color: var(--sub-alt-color) !important;
+  color: var(--text-color) !important;
 }

@@ -137,6 +137,9 @@ function init() {
       console.log(lastMode);
     }
 
+    //prevent bugy clipping
+    document.documentElement.style["overflow-y"] = "hidden";
+
     melodyActive = true;
     frameManager.HideIframe(false);
     const btns = mode.querySelectorAll(".textButton");
@@ -182,6 +185,7 @@ function init() {
         e.target.click();
       }, 5);
     }
+    document.documentElement.style["overflow-y"] = "scroll";
 
     lastMode = e.target.getAttribute("mode");
     frameManager.HideIframe(true);
