@@ -23,8 +23,16 @@
   "host_permissions": [
     "*://*.melodytype.com/*"
   ],
-  "web_accessible_resources": [{
-    "resources": ["styles.css", "iframe-styles.css"],
-    "matches": ["*://*.monkeytype.com/*", "*://*.melodytype.com/*"]
-  }]
+  "web_accessible_resources": [
+    {
+      "resources": ["styles.css", "iframe-styles.css"],
+      "matches": ["*://*.monkeytype.com/*", "*://*.melodytype.com/*"]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "",
+      "strict_min_version": "91.0"
+    }
+  }
 }
