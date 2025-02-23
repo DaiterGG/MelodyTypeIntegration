@@ -197,9 +197,16 @@ function init() {
   buttons.push(document.querySelector(".textButton.view-settings"));
   buttons.push(document.querySelector(".textButton.view-about"));
   buttons.push(document.querySelector(".textButton.view-login"));
+  buttons.push(document.querySelector(".textButton.view-account"));
+  buttons.push(document.querySelector(".signOut"));
+  Array.prototype.push.apply(
+    buttons,
+    Array.from(document.querySelectorAll(".items>a")),
+  );
 
   buttons.forEach((button) => {
     if (button !== clonedButton) {
+      console.log(button);
       button.addEventListener(
         "click",
         (e) => handleOtherButtonClick(e),
