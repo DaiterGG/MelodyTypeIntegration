@@ -1,1 +1,3 @@
-firefox addon page: https://addons.mozilla.org/en-US/firefox/addon/monkeytype-x-melodytype/
+chrome addon page: https://chromewebstore.google.com/detail/bkobmgnjcafanpeapmdmkklfnloggknh
+
+firefox addon page: https://addons.mozilla.org/firefox/addon/monkeytype-x-melodytype/
