@@ -5,17 +5,20 @@ function initMessageHandler() {
 
       const existingCanvases = document.querySelectorAll(".tinted-canvas");
       existingCanvases.forEach((canvas) => canvas.remove());
-
-      imgs.forEach((img) => {
-        if (
-          img != null && img.complete && img.style.display != ""
-        ) {
+      if (imgs[0] != null && imgs[0].complete && imgs[0].style.display != "") {
+        imgs.forEach((img) => {
           applyTint(img);
-        } else {
-          //edge case for when page is still loading
-          setTimeout(() => applyTint(img), 200);
-        }
-      });
+        });
+      } else {
+        //edge case for when page is still loading
+        setTimeout(() => {
+          const existingCanvases = document.querySelectorAll(".tinted-canvas");
+          existingCanvases.forEach((canvas) => canvas.remove());
+          imgs.forEach((img) => {
+            applyTint(img);
+          });
+        }, 200);
+      }
     }
     if (event.data.type === "CSS_VARS_UPDATE") {
       applyCSSVariables(event.data.selector, event.data.variables);

@@ -29,11 +29,6 @@ class FrameManager {
     }
   }
   setupLoadListener() {
-    if (!this.iframe) {
-      console.error("Iframe not initialized!");
-      return;
-    }
-
     this.iframe.addEventListener("load", () => {
       this.syncRootVariables();
     });
@@ -134,7 +129,6 @@ function init() {
       lastMode = document.querySelector(".textButton.active").getAttribute(
         "mode",
       );
-      console.log(lastMode);
     }
 
     //prevent bugy clipping
@@ -206,7 +200,6 @@ function init() {
 
   buttons.forEach((button) => {
     if (button !== clonedButton) {
-      console.log(button);
       button.addEventListener(
         "click",
         (e) => handleOtherButtonClick(e),
