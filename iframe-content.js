@@ -36,7 +36,6 @@ function applyCSSVariables(selector, variables) {
     ) {
       globalThis.postMessage({ type: "ICONS_UPDATE" }, "*");
     }
-    console.log(root.style.getPropertyValue(name));
     root.style.setProperty(name, value);
   });
 }
