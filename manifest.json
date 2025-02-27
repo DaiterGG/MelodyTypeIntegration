@@ -20,9 +20,6 @@
       "all_frames": true
     }
   ],
-  "host_permissions": [
-    "*://*.melodytype.com/*"
-  ],
   "web_accessible_resources": [{
     "resources": ["styles.css", "iframe-styles.css"],
     "matches": ["*://*.monkeytype.com/*", "*://*.melodytype.com/*"]
