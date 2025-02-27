@@ -9,7 +9,7 @@ class FrameManager {
     this.setupLoadListener();
     setInterval(() => {
       this.syncRootVariables();
-    }, 7000);
+    }, 3000);
   }
 
   createIframe() {
@@ -65,6 +65,7 @@ class FrameManager {
       variables: customProperties,
     });
   }
+
   postToFrame(message) {
     if (this.iframe?.contentWindow) {
       this.iframe.contentWindow.postMessage(message, "*");

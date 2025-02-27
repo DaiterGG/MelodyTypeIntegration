@@ -42,6 +42,7 @@ input::placeholder {
 }
 
 .settings-window {
+  height: auto !important;
   background-color: var(--bg-color) !important;
   border: 4px solid var(--sub-alt-color) !important;
   border-radius: var(--roundness) !important;
@@ -50,7 +51,7 @@ input::placeholder {
 
 .close-window-btn {
   background-color: var(--sub-alt-color) !important;
-  color: var(--bg-color) !important;
+  color: var(--sub-color) !important;
 }
 
 .settings-topbar {
@@ -62,7 +63,7 @@ input::placeholder {
 }
 
 .settings-content {
-  padding-bottom: 90px !important;
+  padding-bottom: 50px !important;
 }
 
 .settings-gear-btn {
