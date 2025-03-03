@@ -14,7 +14,7 @@ class FrameManager {
 
   createIframe() {
     this.iframe = document.createElement("iframe");
-    this.iframe.src = "https://melodytype.com";
+    this.iframe.src = `https://melodytype.com`;
     this.iframe.allow = "autoplay; encrypted-media";
     this.iframe.id = "melodytype-embed";
     document.body.appendChild(this.iframe);

@@ -110,6 +110,22 @@ body {
   border-radius: 12px !important;
 }
 
+.redirect>a {
+  color: var(--sub-color) !important;
+}
+
+#email {
+  background-color: var(--sub-alt-color) !important;
+}
+
+#password {
+  background-color: var(--sub-alt-color) !important;
+}
+
+#app>div>div>form>div>div>div>button {
+  color: var(--text-color) !important;
+}
+
 input {
   background-color: transparent !important;
   color: var(--text-color) !important;
