@@ -27,10 +27,12 @@ body {
 
 .cta-button {
   margin-bottom: 1rem !important;
+  color: var(--text-color) !important;
+  background-color: var(--sub-alt-color) !important;
 }
 
 .cta-button:hover {
-  background-color: var(--sub-alt-color) !important;
+  background-color: var(--sub-color) !important;
 }
 
 .letter.incorrect {
