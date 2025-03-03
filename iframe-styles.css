@@ -1,19 +1,28 @@
 html {
+  height: 390% !important;
   overflow: hidden !important;
 }
 
 body {
-  background-color: var(--bg-color);
-}
-
-input {
-  background-color: var(--sub-alt-color) !important;
   color: var(--text-color) !important;
-  border-radius: var(--roundness) !important;
+  overflow: hidden !important;
+  height: 26% !important;
+  background-color: var(--bg-color) !important;
 }
 
-input::placeholder {
-  color: var(--sub-color) !important;
+#app {
+  height: 100% !important;
+}
+
+#app>div {
+  height: 100% !important;
+}
+
+.about-container {
+  height: 100% !important;
+  overflow-y: scroll !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--sub-color) transparent !important;
 }
 
 .letter.incorrect {
@@ -66,17 +75,57 @@ input::placeholder {
   padding-bottom: 50px !important;
 }
 
-.settings-gear-btn {
+.divider {
+  margin: .7rem 0 !important;
+}
+
+.footer {
+  justify-content: left !important;
+  margin-left: 1.5rem !important;
+  width: 4rem !important;
+
+}
+
+#wrapper>.settings-gear-btn {
+  margin-bottom: .5rem !important;
   top: 82% !important;
 }
 
-.linkBox>form {
-  margin-top: 30px;
+.footer>.settings-gear-btn {
+  background-color: var(--sub-alt-color) !important;
 }
 
+.difficulty-cards {
+  margin-bottom: 0px !important;
+}
 
-#app>header {
-  height: 50px;
+.linkBox {
+  margin-top: 0px !important;
+}
+
+.linkBox>form {
+  margin-top: 0px !important;
+  background-color: var(--sub-alt-color) !important;
+  border-color: var(--sub-color) !important;
+  border-radius: 12px !important;
+}
+
+input {
+  background-color: transparent !important;
+  color: var(--text-color) !important;
+  border-radius: var(--roundness) !important;
+}
+
+input::placeholder {
+  color: var(--sub-color) !important;
+}
+
+.home-container {
+  padding-top: 0px !important;
+}
+
+#app>div>header {
+  height: 44px;
 }
 
 #typing-area {
@@ -88,13 +137,9 @@ input::placeholder {
   color: var(--sub-color) !important;
 }
 
-body {
-  overflow: hidden !important;
-  height: 100% !important;
-}
-
-#wrapper {
-  padding-top: -40px !important;
+.card-icon {
+  color: transparent !important;
+  text-shadow: var(--sub-color) 0px 0px 0px !important;
 }
 
 .aligned-icons {
@@ -109,13 +154,20 @@ body {
   color: var(--text-color) !important;
 }
 
-body {
+.toggle-button {
   color: var(--text-color) !important;
+  background-color: var(--sub-alt-color) !important;
+}
+
+.toggle-button.toggle-on {
+  background-color: var(--main-color) !important;
+  color: var(--bg-color) !important;
 }
 
 .toggle-mode>button {
   color: var(--text-color) !important;
 }
+
 
 .start-button {
   border-left-color: var(--main-color) !important;
