@@ -25,6 +25,14 @@ body {
   scrollbar-color: var(--sub-color) transparent !important;
 }
 
+.cta-button {
+  margin-bottom: 1rem !important;
+}
+
+.cta-button:hover {
+  background-color: var(--sub-alt-color) !important;
+}
+
 .letter.incorrect {
   color: var(--incorrect-letter-color) !important;
 
@@ -110,6 +118,10 @@ body {
   border-radius: 12px !important;
 }
 
+.linkBox>form:focus-within {
+  box-shadow: 0 6px 16px #0000004d, 0 0 0 2px var(--sub-color);
+}
+
 .redirect>a {
   color: var(--sub-color) !important;
 }
@@ -193,7 +205,11 @@ input::placeholder {
   color: var(--sub-color) !important;
 }
 
-#submit-btn {
-  background-color: var(--sub-alt-color) !important;
-  color: var(--text-color) !important;
+
+.submit-button {
+  background-color: transparent !important;
+}
+
+.submit-button:hover {
+  background-color: transparent !important;
 }
